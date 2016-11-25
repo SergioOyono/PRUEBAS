@@ -20,6 +20,10 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        
+        Clientes.setVisible(true);     // poder navegar entre fichas
+        Fabricantes.setVisible(true);  // poder navegar entre fichas
+        Articulos.setVisible(true);     // poder navegar entre fichas
     }
 
     /**

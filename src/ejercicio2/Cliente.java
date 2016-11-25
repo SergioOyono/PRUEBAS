@@ -14,11 +14,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Cliente extends javax.swing.JFrame {
+    
 
     static public ResultSet r;
 
     public Cliente() throws SQLException {
         initComponents();
+        
+        CONFIRMAR.setVisible(false);
+        CANCELAR.setVisible(false);
+        
         String url = "jdbc:mysql://localhost:3306/sergiooyono";
         String user = "root";
         String pass = "";
@@ -68,6 +73,7 @@ public class Cliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        NIF.setEditable(false);
         NIF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NIFActionPerformed(evt);
@@ -375,7 +381,7 @@ public class Cliente extends javax.swing.JFrame {
             String query = "insert into clientes values ('" + vNIF + "', '" + vNOMBRE + "', '" + vDIRECCION + "', '" + vPOBLACION + "', '" + vPROVINCIA + "', '" + vTELEFONO + "')";
             int resultado = s.executeUpdate(query);
             NIF.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);
@@ -383,7 +389,10 @@ public class Cliente extends javax.swing.JFrame {
             EDITAR.setVisible(true);
             CONFIRMAR.setVisible(false);
             CANCELAR.setVisible(false);
-            r.refreshRow();
+            
+            s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); //actualizamos una vez se han introducido los valores, lanzando otra vez la consulta
+            query = "select* from articulos";
+            r = s.executeQuery(query);
             r.last();
 
         } catch (SQLException ex) {
@@ -395,7 +404,7 @@ public class Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             NIF.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);
@@ -410,7 +419,7 @@ public class Cliente extends javax.swing.JFrame {
             DIRECCION.setText(r.getString("DIRECCION"));
             POBLACION .setText(r.getString("POBLACION"));
             PROVINCIA.setText(r.getString("PROVINCIA"));
-            TELEFONO.setText(r.getString("TEEFONO"));
+            TELEFONO.setText(r.getString("TELEFONO"));
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }

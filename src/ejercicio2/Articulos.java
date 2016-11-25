@@ -28,6 +28,10 @@ public class Articulos extends javax.swing.JFrame {
      */
     public Articulos() throws SQLException {
         initComponents();
+        
+        CONFIRMAR.setVisible(false); // hacer que los botones confirmar y cancelar se han ocultos
+        CANCELAR.setVisible(false);
+        
         String url = "jdbc:mysql://localhost:3306/sergiooyono";
         String user = "root";
         String pass = "";
@@ -84,6 +88,7 @@ public class Articulos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        COD_ARTICULO.setEditable(false);
         COD_ARTICULO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 COD_ARTICULOActionPerformed(evt);
@@ -447,7 +452,7 @@ public class Articulos extends javax.swing.JFrame {
             String query = "insert into articulos values ('" + vCOD_ARTICULO+"', '"+ vARTICULO+"', '"+vFABRICANTE+"', '"+vPESO+"', '"+vCATEGORIA+"', '"+vPRECIO_VENTA+"','"+ vPRECIO_COSTE+"','"+vEXISTENCIAS+"')";
             int resultado = s.executeUpdate(query);
             COD_ARTICULO.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);
@@ -455,7 +460,10 @@ public class Articulos extends javax.swing.JFrame {
             EDITAR.setVisible(true);
             CONFIRMAR.setVisible(false);
             CANCELAR.setVisible(false);
-            r.refreshRow();
+            
+            s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); //actualizamos
+            query = "select* from articulos";
+            r = s.executeQuery(query);
             r.last();
 
         } catch (SQLException ex) {
@@ -468,7 +476,7 @@ public class Articulos extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             COD_ARTICULO.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);

@@ -23,6 +23,10 @@ public class Fabricantes extends javax.swing.JFrame {
     
     public Fabricantes() throws SQLException {
         initComponents();
+        
+        CONFIRMAR.setVisible(false);
+        CANCELAR.setVisible(false);
+        
         String url = "jdbc:mysql://localhost:3306/sergiooyono";
         String user = "root";
         String pass = "";
@@ -70,6 +74,7 @@ public class Fabricantes extends javax.swing.JFrame {
 
         jLabel3.setText("PAIS");
 
+        COD_FABRICANTE.setEditable(false);
         COD_FABRICANTE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 COD_FABRICANTEActionPerformed(evt);
@@ -315,7 +320,7 @@ public class Fabricantes extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             COD_FABRICANTE.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);
@@ -348,7 +353,7 @@ public class Fabricantes extends javax.swing.JFrame {
             String query = "insert into  fabricantes values ('" + vCOD_FABRICANTE + "', '" + vNOMBRE + "', '" + vPAIS + "')";
             int resultado = s.executeUpdate(query);
             COD_FABRICANTE.setEditable(false);
-            PRIMERO.setVisible(false);
+            PRIMERO.setVisible(true);
             ANTERIOR.setVisible(true);
             SIGUIENTE.setVisible(true);
             ULTIMO.setVisible(true);
@@ -356,7 +361,11 @@ public class Fabricantes extends javax.swing.JFrame {
             EDITAR.setVisible(true);
             CONFIRMAR.setVisible(false);
             CANCELAR.setVisible(false);
-            r.refreshRow();
+            
+            
+            s = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); //actualizamos
+            query = "select* from articulos";
+            r = s.executeQuery(query);
             r.last();
             
         } catch (SQLException ex) {
