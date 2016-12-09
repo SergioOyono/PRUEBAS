@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejercicio2; // estamos haciendo pruebas
+package ejercicio2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +26,7 @@ public class Fabricantes extends javax.swing.JFrame {
         
         CONFIRMAR.setVisible(false);
         CANCELAR.setVisible(false);
-        // desabilitar confinmar y false
+        
         String url = "jdbc:mysql://localhost:3306/sergiooyono";
         String user = "root";
         String pass = "";
